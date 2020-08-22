@@ -4,5 +4,8 @@
   "description": "This will help you to connect to your phone ( or any phone in general ) remotely using scrcpy",
   "main": "main.js",
   "author": "Dr4kk0nnys",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.0.2"
+  }
 }
