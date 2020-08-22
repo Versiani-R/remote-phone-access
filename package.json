@@ -1,0 +1,8 @@
+{
+  "name": "remote-access-scrcpy",
+  "version": "1.0.0",
+  "description": "This will help you to connect to your phone ( or any phone in general ) remotely using scrcpy",
+  "main": "main.js",
+  "author": "Dr4kk0nnys",
+  "license": "MIT"
+}
