@@ -20,3 +20,30 @@ I just recently broke my phone's display, the touch works, but the image doesn't
 1. [mirroring your phone's screen](https://www.howtogeek.com/430466/how-to-mirror-and-control-your-android-phone-on-any-windows-pc/)
   
 And the list goes on and on ...
+
+# Steps to follow
+**DISCLAIMER: I HAVE ABSOLUTELY NO IDEA IF IT WORKS ON APPLE DEVICES. TRY BY YOUR OWN RISK.**  
+First of all, you must have all the dependencies installed.  
+Second of all, it only works while your phone and your pc are on the same network.  
+After that:
+1. Get your phone, and activate the developer's options. It should be one of the following paths:
+    * `Settings > About Phone > Build Number`
+    * `Settings > About Phone > Status > Build Number`
+    * `Settings > About Phone > Status > Info > Build Number`
+1. On developer's options, enable usb-debugging
+    * `Debugging > Toggle USB Debugging`
+1. Get your ip address. It should be one of the following paths
+    * `Settings > About Phone > Status > Ip Address`
+    * `Settings > About Phone > Info > Ip Address`
+
+    1. **Another great way of getting your ip address ( and every other ip address of your network ) is with the following command**
+        * `nmap -sn 10.0.0.0/24`
+1. Plug your device on the computer's usb.
+1. On your terminal, type the following:
+    * `adb tcpip 5555`
+    * *this marks your phone as open, with the port as 5555*
+1. Unplug your phone
+1. Run the script
+    * `node main.js`
+    1. **If you used other port, run:**
+        * `PORT=1234 node main.js`

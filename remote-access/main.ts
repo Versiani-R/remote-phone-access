@@ -73,10 +73,15 @@ class Main {
         }
     }
 
+    async runScrcpy(): Promise<void> {
+        await this.execPromise('scrcpy');
+    }
+
     async controller(): Promise<void> {
         const ipAddresses = await this.getSanitizedIpAddresses();
         const result = await this.connectToIpAddress(ipAddresses);
-        console.log(result);
+        if (result) await this.runScrcpy();
+        else console.log('Something went wrong!');
     }
 }
 

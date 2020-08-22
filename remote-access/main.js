@@ -64,10 +64,16 @@ class Main {
             console.error(error);
         }
     }
+    async runScrcpy() {
+        await this.execPromise('scrcpy');
+    }
     async controller() {
         const ipAddresses = await this.getSanitizedIpAddresses();
         const result = await this.connectToIpAddress(ipAddresses);
-        console.log(result);
+        if (result)
+            await this.runScrcpy();
+        else
+            console.log('Something went wrong!');
     }
 }
 const main = new Main();
