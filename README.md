@@ -12,6 +12,17 @@ Also, as a matter of fact, it will use quite a lot of linux terminal commands, I
     * `sudo apt install adb`
 1. [nodejs](https://nodejs.org/en/)
 
+# Errors
+There are some known possible errors. The most annoying of them being that nmap is quite inconsistent.  
+* [NMAP results inconsistent](https://security.stackexchange.com/questions/204188/nmap-results-inconsistent)
+* [nmap.online inconsistent results](https://security.stackexchange.com/questions/32974/nmap-online-inconsistent-results/32976)
+  
+As a matter of fact, it's not nmap's fault, sometimes, apparently, the firewall of some devices block the nmap scan. Thus, it doesn't show in the list of available ip addresses.  
+To simply fix that: Run the program multiple times, if you're sure the setup was done correctly.  
+It's what I do, btw.  
+  
+If you find any other errors / issues, please contact me.  
+
 # Usage
 I just recently broke my phone's display, the touch works, but the image doesn't ( the phone's screen is black ). I tried many ways to have access to my phone, and being honest, there's a lot of great ways of achieving so.  
 1. [airdroid](web.airdroid.com) Let's you do a bunch of stuff
