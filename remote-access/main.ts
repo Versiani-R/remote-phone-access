@@ -18,25 +18,29 @@ class Main {
 
     async getSanitizedIpAddresses(): Promise<string[]> {
         try {
-            const { stdout } = await this.execPromise('nmap -sn 10.0.0.0/24 | grep "Nmap"');
+            // change the path for your system
+            const pathToFile = '~/Documents/hacking/.remote-phone-access/scan.txt';
+            await this.execPromise(`ipscan -f:range 10.0.0.0 10.0.0.255 -s -o ${pathToFile} -q`);
 
-            console.log(stdout);
 
-            const ipAddresses = stdout.split('\n');
 
-            /*
-                * Sanitizing the ipAddresses array
-                * removing the first line
-                    * Starting Nmap 7.60 ( https://nmap.org ) at 2020-08-22 16:42 -03
-                * removing the last two lines
-                    * Nmap done: 256 IP addresses (3 hosts up) scanned in 2.58 seconds
-                    * ''
-            */
-            const sanitizedIpAddresses = ipAddresses.splice(1, stdout.split('\n').length);
-            sanitizedIpAddresses.pop();
-            sanitizedIpAddresses.pop();
 
-            return sanitizedIpAddresses;
+            
+            // const ipAddresses = stdout.split('\n');
+
+            // /*
+            //     * Sanitizing the ipAddresses array
+            //     * removing the first line
+            //         * Starting Nmap 7.60 ( https://nmap.org ) at 2020-08-22 16:42 -03
+            //     * removing the last two lines
+            //         * Nmap done: 256 IP addresses (3 hosts up) scanned in 2.58 seconds
+            //         * ''
+            // */
+            // const sanitizedIpAddresses = ipAddresses.splice(1, stdout.split('\n').length);
+            // sanitizedIpAddresses.pop();
+            // sanitizedIpAddresses.pop();
+
+            // return sanitizedIpAddresses;
 
         } catch (error) {
             console.error(error);
