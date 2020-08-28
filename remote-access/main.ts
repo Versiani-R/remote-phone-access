@@ -115,30 +115,14 @@ class Main {
         }
     }
 
-    async connectToIpAddress(sanitizedIpAddresses: string[]): Promise<boolean> {
+    async tryConnectionWithIpAddresses(sanitizedIpAddresses: string[]): Promise<boolean> {
         try {
             for (let i = 0; i < sanitizedIpAddresses.length; i++) {
+                const ip = sanitizedIpAddresses[i];
+                const { stdout } = await this.execPromise(`adb connect ${ip}:${this.PORT}`);
 
-                /*
-                    * sanitizedIpAddresses[i]: Nmap scan report for _gateway (10.0.0.1)
-                    * But we need: 10.0.0.1
-                    * 
-                    * element.split(' '): ['Nmap', 'scan', 'report', 'for', '_gateway', '(10.0.0.1)']
-                    * element.split(' ').length - 1: 5
-                    * 
-                    * ip: (10.0.0.1)
-                    * sanitizedIp: 10.0.0.1
-                */
-                const element = sanitizedIpAddresses[i];
-                const ip = element.split(' ')[(element.split(' ').length - 1)];
-                const sanitizedIp = ip.replace(/[()]/g, '');
-
-                const { stdout } = await this.execPromise(`adb connect ${sanitizedIp}:${this.PORT}`);
-
-                // if it has already connected, there's no need to keep checking for open ports
                 if (stdout.startsWith('connected')) return true;
             }
-
             return false;
         } catch (error) {
             console.error(error);
@@ -151,10 +135,10 @@ class Main {
 
     async controller(): Promise<void> {
         const ipAddresses = await this.getSanitizedIpAddresses();
+        const result = await this.tryConnectionWithIpAddresses(ipAddresses);
 
-        // const result = await this.connectToIpAddress(ipAddresses);
-        // if (result) await this.runScrcpy();
-        // else console.log('Something went wrong!');
+        if (result) await this.runScrcpy();
+        else console.log('Unable to connect to device!');
     }
 }
 

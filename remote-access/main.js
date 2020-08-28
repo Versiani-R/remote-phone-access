@@ -88,21 +88,10 @@ class Main {
                 '10.0.0.169      37 ms           [n/a]                   [n/a]           '
             */
             const sanitizedIPS = ipsInfo.map(element => element.split(' ')[0]);
-            console.log(sanitizedIPS);
-            return [''];
-            // const ipAddresses = stdout.split('\n');
-            // /*
-            //     * Sanitizing the ipAddresses array
-            //     * removing the first line
-            //         * Starting Nmap 7.60 ( https://nmap.org ) at 2020-08-22 16:42 -03
-            //     * removing the last two lines
-            //         * Nmap done: 256 IP addresses (3 hosts up) scanned in 2.58 seconds
-            //         * ''
-            // */
-            // const sanitizedIpAddresses = ipAddresses.splice(1, stdout.split('\n').length);
-            // sanitizedIpAddresses.pop();
-            // sanitizedIpAddresses.pop();
-            // return sanitizedIpAddresses;
+            /*
+                * sanitizedIPS: ['10.0.0.1', '10.0.0.117', '10.0.0.169']
+            */
+            return sanitizedIPS;
         }
         catch (error) {
             console.error(error);
@@ -117,24 +106,11 @@ class Main {
             throw error;
         }
     }
-    async connectToIpAddress(sanitizedIpAddresses) {
+    async tryConnectionWithIpAddresses(sanitizedIpAddresses) {
         try {
             for (let i = 0; i < sanitizedIpAddresses.length; i++) {
-                /*
-                    * sanitizedIpAddresses[i]: Nmap scan report for _gateway (10.0.0.1)
-                    * But we need: 10.0.0.1
-                    *
-                    * element.split(' '): ['Nmap', 'scan', 'report', 'for', '_gateway', '(10.0.0.1)']
-                    * element.split(' ').length - 1: 5
-                    *
-                    * ip: (10.0.0.1)
-                    * sanitizedIp: 10.0.0.1
-                */
-                const element = sanitizedIpAddresses[i];
-                const ip = element.split(' ')[(element.split(' ').length - 1)];
-                const sanitizedIp = ip.replace(/[()]/g, '');
-                const { stdout } = await this.execPromise(`adb connect ${sanitizedIp}:${this.PORT}`);
-                // if it has already connected, there's no need to keep checking for open ports
+                const ip = sanitizedIpAddresses[i];
+                const { stdout } = await this.execPromise(`adb connect ${ip}:${this.PORT}`);
                 if (stdout.startsWith('connected'))
                     return true;
             }
@@ -149,9 +125,11 @@ class Main {
     }
     async controller() {
         const ipAddresses = await this.getSanitizedIpAddresses();
-        // const result = await this.connectToIpAddress(ipAddresses);
-        // if (result) await this.runScrcpy();
-        // else console.log('Something went wrong!');
+        const result = await this.tryConnectionWithIpAddresses(ipAddresses);
+        if (result)
+            await this.runScrcpy();
+        else
+            console.log('Unable to connect to device!');
     }
 }
 const main = new Main();
