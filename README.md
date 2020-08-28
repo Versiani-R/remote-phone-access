@@ -37,10 +37,12 @@ After that:
 1. On developer's options, enable usb-debugging
     * `Debugging > Toggle USB Debugging`
 
-(***OPTIONAL*** *the program itself tries the connection with all the ip addresses on the network, you can skip this process if you want to* )
-1. Get your ip address. It should be one of the following paths
+1. (***OPTIONAL***) Get your ip address. It should be one of the following paths
+
     * `Settings > About Phone > Status > Ip Address`
     * `Settings > About Phone > Info > Ip Address`
+
+    * **the program itself tries the connection with all the ip addresses on the network, you can skip this process if you want to**
 
     1. **Another great way of getting your ip address ( and every other ip address of your network ) is with the following command**
         * `ipscan -f:range 10.0.0.0 10.0.0.255 -s`
