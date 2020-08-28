@@ -32,11 +32,15 @@ After that:
     * `Settings > About Phone > Status > Info > Build Number`
 1. On developer's options, enable usb-debugging
     * `Debugging > Toggle USB Debugging`
+
+(***OPTIONAL*** *the program itself tries the connection with all the ip addresses on the network, you can skip this process if you want to* )
 1. Get your ip address. It should be one of the following paths
     * `Settings > About Phone > Status > Ip Address`
     * `Settings > About Phone > Info > Ip Address`
 
     1. **Another great way of getting your ip address ( and every other ip address of your network ) is with the following command**
+        * `ipscan -f:range 10.0.0.0 10.0.0.255 -s`
+    1. **Other possible way is with the command (NOT 100% RELIABLE)**
         * `nmap -sn 10.0.0.0/24`
 1. Plug your device on the computer's usb.
 1. On your terminal, type the following:
