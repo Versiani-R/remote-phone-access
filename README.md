@@ -11,6 +11,10 @@ Also, as a matter of fact, it will use quite a lot of linux terminal commands, I
 1. [adb](https://www.xda-developers.com/install-adb-windows-macos-linux/)
     * `sudo apt install adb`
 1. [nodejs](https://nodejs.org/en/)
+1. ***(OPTIONAL)*** [nmap](https://nmap.org/)
+    * `sudo apt install nmap`
+    * You don't need to install this dependency, it's not as reliable as I want to;
+    * It's only possible use case is on: `Steps To Follow > 3`;
 
 # Usage
 I just recently broke my phone's display, the touch works, but the image doesn't ( the phone's screen is black ). I tried many ways to have access to my phone, and being honest, there's a lot of great ways of achieving so.  
