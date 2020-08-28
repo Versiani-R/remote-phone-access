@@ -2,6 +2,11 @@ import * as util from 'util';
 import { exec } from 'child_process';
 import { readFile } from 'fs';
 
+/*
+    * TODO: The creator of scrcpy gave me a great tip on how to find the ip address
+    * using: "adb shell netcfg" or "adb shell ip a", I will look into it
+*/
+
 class Main {
     /*
         * port can be passed as an argument through the command line
@@ -79,24 +84,23 @@ class Main {
             */
             const scanFile = await this.readFile(pathToFile);
 
-            return [''];
+            console.log(scanFile);
 
-            // const ipAddresses = stdout.split('\n');
+            const ipsInfo = scanFile.split('\n').filter(element => element.startsWith('10.0.0.'));
+            /*
+                * IpInfo should look something like this
 
-            // /*
-            //     * Sanitizing the ipAddresses array
-            //     * removing the first line
-            //         * Starting Nmap 7.60 ( https://nmap.org ) at 2020-08-22 16:42 -03
-            //     * removing the last two lines
-            //         * Nmap done: 256 IP addresses (3 hosts up) scanned in 2.58 seconds
-            //         * ''
-            // */
-            // const sanitizedIpAddresses = ipAddresses.splice(1, stdout.split('\n').length);
-            // sanitizedIpAddresses.pop();
-            // sanitizedIpAddresses.pop();
+                '10.0.0.1        0 ms            _gateway                80              ',
+                '10.0.0.117      0 ms            230                     [n/a]           ',
+                '10.0.0.169      37 ms           [n/a]                   [n/a]           '
+            */
 
-            // return sanitizedIpAddresses;
+            const sanitizedIPS = ipsInfo.map(element => element.split(' ')[0]);
+            /*
+                * sanitizedIPS: ['10.0.0.1', '10.0.0.117', '10.0.0.169']
+            */
 
+            return sanitizedIPS;
         } catch (error) {
             console.error(error);
         }
@@ -107,10 +111,8 @@ class Main {
             const file = await this.readFilePromise(path, 'utf8');
             return file;
         } catch (error) {
-            console.error(error);
+            throw error;
         }
-
-        return 'a';
     }
 
     async connectToIpAddress(sanitizedIpAddresses: string[]): Promise<boolean> {
